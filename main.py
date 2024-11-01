@@ -87,4 +87,4 @@ for stud in det_stud:
 file_out.close()
 
 #pachete necesare docker ( cu grup de utilizatori docker ), shutil, GitPython
-#script scris si testat DOAR pe windows
+#script scris si testat DOAR pe linux-debian-12
