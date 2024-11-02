@@ -5,7 +5,6 @@
 - instalare docker 
 - clonare repo
 - rulare setup venv
-- activare venv
 
 ### Exemplu in.csv
 ```
