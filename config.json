@@ -1,0 +1,11 @@
+{
+  "in" : "stud.csv",
+  "in_fields":[
+    "nume", "prenume", "git"
+  ],
+  "out" : "out.csv",
+  "out_fields":[
+    "prenume", "nume", "res"
+  ],
+  "checker": "https://github.com/VladGeorgeBalas/checker.git"
+}
