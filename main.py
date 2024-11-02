@@ -19,27 +19,29 @@ import docker
 from git import Repo
 import shutil
 import os
+import json
+
+config_json = open("config.json", "r").read()
+config_dict = json.loads(config_json)
 
 #citim lista studenti si detaliile lor
 #poate se vrea schimbarea numelui fisierului
 det_stud = []
-file_stud = open("stud.csv", 'r').readlines()
+file_stud = open(config_dict["in"], 'r').readlines()
 for i in file_stud:
     det_stud.append(i.replace('\n', '').split(","))
 print(det_stud)
 
 #de inlocuit cu orice git e necesar, se poate si doar copia un checker deja aflat pe dispozitiv
-git_chk = "https://github.com/VladGeorgeBalas/checker.git"
+git_chk = config_dict["checker"]
 
 #fisierul de iesire
 #poate se vrea schimbarea numelui fisierului
-file_out = open("out.csv", "w")
+file_out = open(config_dict["out"], "w")
 
 for stud in det_stud:
     #se mai pot adauga detalii aici daca e nevoie
-    nume = stud[0]
-    prenume = stud[1]
-    git_src = stud[2]
+    git_src = stud[config_dict["in_fields"].index("git")]
     
     #downloadeaza codul studentului
     dir_src = "/tmp/src/"
@@ -76,9 +78,15 @@ for stud in det_stud:
     
     #linia cu iesirea
     #se pot aduga detalii aici
-    out = nume + "," + prenume + ","
-    for i in res.decode('utf-8').replace('\n', '').split(' '):
-        out = out + i + ','
+    #out = nume + "," + prenume + ","
+    out = ""
+    for i in config_dict["out_fields"]:
+        if i != "res":
+            out += stud[config_dict["in_fields"].index(i)] + ","
+        else:
+            for i in res.decode('utf-8').replace('\n', '').split(' '):
+                out = out + i + ','
+
     file_out.write(out + '\n')
 
     shutil.rmtree(dir_chk)
