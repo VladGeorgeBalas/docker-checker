@@ -25,22 +25,18 @@ config_json = open("config.json", "r").read()
 config_dict = json.loads(config_json)
 
 #citim lista studenti si detaliile lor
-#poate se vrea schimbarea numelui fisierului
 det_stud = []
 file_stud = open(config_dict["in"], 'r').readlines()
 for i in file_stud:
     det_stud.append(i.replace('\n', '').split(","))
 print(det_stud)
 
-#de inlocuit cu orice git e necesar, se poate si doar copia un checker deja aflat pe dispozitiv
 git_chk = config_dict["checker"]
 
 #fisierul de iesire
-#poate se vrea schimbarea numelui fisierului
 file_out = open(config_dict["out"], "w")
 
 for stud in det_stud:
-    #se mai pot adauga detalii aici daca e nevoie
     git_src = stud[config_dict["in_fields"].index("git")]
     
     #downloadeaza codul studentului
@@ -77,8 +73,6 @@ for stud in det_stud:
     print(res)
     
     #linia cu iesirea
-    #se pot aduga detalii aici
-    #out = nume + "," + prenume + ","
     out = ""
     for i in config_dict["out_fields"]:
         if i != "res":
